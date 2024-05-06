@@ -1,0 +1,40 @@
+//This will automatically turn thread into cloth once manually selected loom.
+//Run macro, select Loom once when prompted then let it work for you!
+//Features : auto stop when above set weight, auto stop when no more material.
+//Tested and working on MobileUO 06.05.2024, coded by Joka.
+//Note : graphic ID for loom doesn't seem to accept target, so had to request manually selecting loom then using 'autotargetlast' later to auto loop.
+
+//select loom
+if @findtype 0x0E1D any backpack or @findtype 0x0E1E any backpack or @findtype 0x0E1F any backpack or @findtype 0x0FA0 any backpack
+useobject found
+headmsg 'Select the loom.' 66
+waitfortarget 30000
+pause 6000
+else
+headmsg 'You are out of material! No thread or yarn in your backpack...' 66
+playsound 803
+stop
+endif
+
+//auto loop
+while not dead
+if @findtype 0x0E1D any backpack or @findtype 0x0E1E any backpack or @findtype 0x0E1F any backpack or @findtype 0x0FA0 any backpack
+useobject found
+waitfortarget 10
+autotargetlast
+pause 10
+else
+headmsg 'You are out of material! No thread or yarn in your backpack...' 66
+playsound 803
+stop
+endif
+
+
+//Can adjust max weight value to your character
+if weight > 500
+headmsg 'Need to unload!' 66
+playsound 42
+stop
+endif
+
+endwhile
