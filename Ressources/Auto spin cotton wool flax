@@ -1,0 +1,33 @@
+//This will target the closest spinning wheel and spin all your cotton/wool/flax from your backpack.
+//Run macro, select Spinning wheel then let it work for you!
+//Features : auto stop when above set weight, auto stop when no more material.
+//Tested and working on MobileUO 06.05.2024, coded by Joka.
+
+while not dead
+if @findtype 0x0DF9 any backpack or @findtype 0x0DF8 any backpack or @findtype  0x1A9C any backpack or @findtype  0x1A9D any backpack
+useobject found
+waitfortarget 30000
+else
+headmsg 'You are out of material! No wool, cotton or flax in your backpack...' 66
+playsound 803
+stop
+endif
+
+if @findtype 0x1015 'any' 'ground' or @findtype 0x101C 'any' 'ground' or @findtype 0x1019 'any' 'ground'
+target! found
+headmsg 'Spinning the wheel...' 66
+pause 6500
+else
+headmsg 'Select the spinning wheel.' 66
+pause 10000
+endif
+
+
+//Can adjust max weight value to your character
+if weight > 500
+headmsg 'Need to unload!' 66
+playsound 42
+stop
+endif
+
+endwhile
